@@ -12,7 +12,7 @@ int main()
 {
     int width, height, channels;
     unsigned char *img=stbi_load("pozacualexreferinta.png",&width,&height,&channels,0);
-
+    int p;
     if (img==nullptr)
     {
         cout << "imaginea nu s-a loadat";
@@ -34,8 +34,26 @@ int main()
         height/2,
         0,
         STBIR_RGB);
-    stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
-    cout << "Successfully saved resized_test.png!" << endl;
+    // stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
+    // cout << "Successfully saved resized_test.png!" << endl;
+
+    for (int i=0;i<newheight;i++)
+    {
+        for (int j=0;j<newwidth;j++)
+        {
+            p=(j*newwidth+j)*channels;
+
+            unsigned char r=resized_img[p+0];
+            unsigned char g=resized_img[p+1];
+            unsigned char b=resized_img[p+2];
+            int brightness=0.299*r+0.587*g+0.114*b;
+            cout << "brightness: " << brightness << endl;
+        }
+
+    }
+
+
+
     delete[] resized_img;
     stbi_image_free(img);
     return 0;
