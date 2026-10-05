@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
     int width, height, channels;
-    unsigned char *img=stbi_load("pozacualexreferinta.png",&width,&height,&channels,0);
+    unsigned char *img=stbi_load("fluture.jpg",&width,&height,&channels,0);
     int p;
     if (img==nullptr)
     {
@@ -20,7 +20,10 @@ int main()
     }
 
     cout << width << " x " << height << " x " << channels << endl;
-    int newwidth=width/2, newheight=height/2;
+
+    cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
+    int newwidth, newheight;
+    cin >> newheight >> newwidth;
 
     unsigned char *resized_img = new unsigned char[newwidth * newheight * channels];
 
@@ -30,8 +33,8 @@ int main()
         height,
         0,
         resized_img,
-        width/2,
-        height/2,
+        newwidth,
+        newheight,
         0,
         STBIR_RGB);
     // stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
@@ -47,8 +50,9 @@ int main()
             unsigned char g=resized_img[p+1];
             unsigned char b=resized_img[p+2];
             int brightness=0.299*r+0.587*g+0.114*b;
-            cout << "brightness: " << brightness << endl;
+            cout << "| " << brightness;
         }
+        cout << endl;
 
     }
 
