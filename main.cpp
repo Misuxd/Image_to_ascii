@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 using namespace std;
 #define STB_IMAGE_IMPLEMENTATION
 #include "stbimage/stb_image.h"
@@ -8,10 +9,21 @@ using namespace std;
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "stbimage/stb_image_resize2.h"
 
+struct img_related{
+    int width, height, channels;
+}imagine;
+
+struct ascii {
+    vector<char> simbol={'@' , '%' , '#' , '*' , '+' , '=' , '-' , ':' , '.' , ' '};
+    // 10 caractere in total || max brightness = 255
+
+}color;
+
+
 int main()
 {
-    int width, height, channels;
-    unsigned char *img=stbi_load("fluture.jpg",&width,&height,&channels,0);
+
+    unsigned char *img=stbi_load("fluture.jpg",&imagine.width,&imagine.height,&imagine.channels,0);
     int p;
     if (img==nullptr)
     {
@@ -19,18 +31,18 @@ int main()
         exit(1);
     }
 
-    cout << width << " x " << height << " x " << channels << endl;
+    cout << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl;
 
     cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
     int newwidth, newheight;
     cin >> newheight >> newwidth;
 
-    unsigned char *resized_img = new unsigned char[newwidth * newheight * channels];
+    unsigned char *resized_img = new unsigned char[newwidth * newheight * imagine.channels];
 
     stbir_resize_uint8_linear(
         img,
-        width,
-        height,
+        imagine.width,
+        imagine.height,
         0,
         resized_img,
         newwidth,
@@ -44,7 +56,7 @@ int main()
     {
         for (int j=0;j<newwidth;j++)
         {
-            p=(j*newwidth+j)*channels;
+            p=(j*newwidth+j)*imagine.channels;
 
             unsigned char r=resized_img[p+0];
             unsigned char g=resized_img[p+1];
