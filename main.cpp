@@ -114,7 +114,7 @@ int main()
 
 */
     // ----- CELE DE JOS IAU IMAGINEA DEJA LOADATA SI O CREAZA IN FISIER / COPIAZA ------
-    // stbi_write_png("alex.png", width, height, channels, img, width*channels);
+    // stbi_write_png("fluture.png", width, height, channels, img, width*channels);
     // stbi_write_jpg("fluture.jpg", width, height, channels, img, 100);
 
 
