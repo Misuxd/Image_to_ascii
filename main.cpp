@@ -120,5 +120,5 @@ int main()
 
 //MAX BRIGHTNESS 255 255/10 = 25.5 ~ 25
 //
-    // stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
-    // cout << "Successfully saved resized_test.png!" << endl;
+    // stbi_write_png("*.png", newwidth, newheight, channels, resized_img, newwidth * channels);
+    // cout << "Successfully save!" << endl;
