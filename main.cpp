@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <fstream>
 #include <stdlib.h>
 #include <vector>
 using namespace std;
@@ -39,7 +40,7 @@ int main()
 
     cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
     int newwidth, newheight;
-    cin >> newheight >> newwidth;
+    cin >> newwidth >> newheight;
 
     unsigned char *resized_img = new unsigned char[newwidth * newheight * imagine.channels];
 
@@ -53,39 +54,39 @@ int main()
         newheight,
         0,
         STBIR_RGB);
-    // stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
-    // cout << "Successfully saved resized_test.png!" << endl;
+
+    ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
 
     for (int i=0;i<newheight;i++)
     {
         for (int j=0;j<newwidth;j++)
         {
-            p=(j*newwidth+j)*imagine.channels;
+            p=(i*newwidth+j)*imagine.channels;
 
             unsigned char r=resized_img[p+0];
             unsigned char g=resized_img[p+1];
             unsigned char b=resized_img[p+2];
             int brightness=0.299*r+0.587*g+0.114*b;
 
-            if (brightness<25) cout<<color.simbol[25];
-            else if (brightness<50) cout<<color.simbol[50];
-            else if (brightness<75) cout<<color.simbol[75];
-            else if (brightness<100) cout<<color.simbol[100];
-            else if (brightness<125) cout<<color.simbol[125];
-            else if (brightness<150) cout<<color.simbol[150];
-            else if (brightness<175) cout<<color.simbol[175];
-            else if (brightness<200) cout<<color.simbol[200];
-            else if (brightness<225) cout<<color.simbol[225];
-            else if (brightness<255) cout<<color.simbol[255];
+            if (brightness<25) Afis<<color.simbol[25];
+            else if (brightness<50) Afis<<color.simbol[50];
+            else if (brightness<75) Afis<<color.simbol[75];
+            else if (brightness<100) Afis<<color.simbol[100];
+            else if (brightness<125) Afis<<color.simbol[125];
+            else if (brightness<150) Afis<<color.simbol[150];
+            else if (brightness<175) Afis<<color.simbol[175];
+            else if (brightness<200) Afis<<color.simbol[200];
+            else if (brightness<225) Afis<<color.simbol[225];
+            else if (brightness<255) Afis<<color.simbol[255];
 
-            //cout << " " << brightness;
+           // cout << " " << brightness;
         }
-        cout << endl;
+        Afis << endl;
 
     }
 
 
-
+    Afis.close();
     delete[] resized_img;
     stbi_image_free(img);
     return 0;
@@ -119,3 +120,5 @@ int main()
 
 //MAX BRIGHTNESS 255 255/10 = 25.5 ~ 25
 //
+    // stbi_write_png("resized_test.png", newwidth, newheight, channels, resized_img, newwidth * channels);
+    // cout << "Successfully saved resized_test.png!" << endl;
