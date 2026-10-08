@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <stdlib.h>
 #include <vector>
 using namespace std;
@@ -14,7 +15,10 @@ struct img_related{
 }imagine;
 
 struct ascii {
-    vector<char> simbol={'@' , '%' , '#' , '*' , '+' , '=' , '-' , ':' , '.' , ' '};
+    map<int, char> simbol = {
+        {25, '@'}, {50, '%'}, {75, '#'}, {100, '*'}, {125, '+'}, {150, '='}, {175, '-'}, {200, ':'}, {225, '.'},
+        {255, ' '}
+    };
     // 10 caractere in total || max brightness = 255
 
 }color;
@@ -62,7 +66,19 @@ int main()
             unsigned char g=resized_img[p+1];
             unsigned char b=resized_img[p+2];
             int brightness=0.299*r+0.587*g+0.114*b;
-            cout << "| " << brightness;
+
+            if (brightness<25) cout<<color.simbol[25];
+            else if (brightness<50) cout<<color.simbol[50];
+            else if (brightness<75) cout<<color.simbol[75];
+            else if (brightness<100) cout<<color.simbol[100];
+            else if (brightness<125) cout<<color.simbol[125];
+            else if (brightness<150) cout<<color.simbol[150];
+            else if (brightness<175) cout<<color.simbol[175];
+            else if (brightness<200) cout<<color.simbol[200];
+            else if (brightness<225) cout<<color.simbol[225];
+            else if (brightness<255) cout<<color.simbol[255];
+
+            //cout << " " << brightness;
         }
         cout << endl;
 
@@ -99,3 +115,7 @@ int main()
     // ----- CELE DE JOS IAU IMAGINEA DEJA LOADATA SI O CREAZA IN FISIER / COPIAZA ------
     // stbi_write_png("alex.png", width, height, channels, img, width*channels);
     // stbi_write_jpg("fluture.jpg", width, height, channels, img, 100);
+
+
+//MAX BRIGHTNESS 255 255/10 = 25.5 ~ 25
+//
