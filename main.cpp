@@ -68,16 +68,16 @@ int main()
             unsigned char b=resized_img[p+2];
             int brightness=0.299*r+0.587*g+0.114*b;
 
-            if (brightness<25) Afis<<color.simbol[25];
-            else if (brightness<50) Afis<<color.simbol[50];
-            else if (brightness<75) Afis<<color.simbol[75];
-            else if (brightness<100) Afis<<color.simbol[100];
-            else if (brightness<125) Afis<<color.simbol[125];
-            else if (brightness<150) Afis<<color.simbol[150];
-            else if (brightness<175) Afis<<color.simbol[175];
-            else if (brightness<200) Afis<<color.simbol[200];
-            else if (brightness<225) Afis<<color.simbol[225];
-            else if (brightness<255) Afis<<color.simbol[255];
+            if (brightness<25) Afis<<color.simbol[25]<<" ";
+            else if (brightness<50) Afis<<color.simbol[50]<<" ";
+            else if (brightness<75) Afis<<color.simbol[75]<<" ";
+            else if (brightness<100) Afis<<color.simbol[100]<<" ";
+            else if (brightness<125) Afis<<color.simbol[125]<<" ";
+            else if (brightness<150) Afis<<color.simbol[150]<<" ";
+            else if (brightness<175) Afis<<color.simbol[175]<<" ";
+            else if (brightness<200) Afis<<color.simbol[200]<<" ";
+            else if (brightness<225) Afis<<color.simbol[225]<<" ";
+            else if (brightness<255) Afis<<color.simbol[255]<<" ";
 
            // cout << " " << brightness;
         }
