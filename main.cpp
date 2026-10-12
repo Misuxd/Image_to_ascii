@@ -24,11 +24,24 @@ struct ascii {
 
 }color;
 
+// !!! DE FACUT CA UIT -- MUTAT IMAGINI IN FOLDERUL DE IMAGINI -- FOLOSIT ARGV PT FILENAME , WIDTH , HEIGHT
+// ALSO DE GASIT O METODA SA IL FAC SA ARATE MAI FRUMOS
 
-int main()
+int main(int argc , char *argv[])
 {
 
-    unsigned char *img=stbi_load("fluture.jpg",&imagine.width,&imagine.height,&imagine.channels,0);
+    if (argc!=3) {
+        cout << "Usage: " << argv[0] << " <path_to_image>" << endl;
+        cout<<"Introdu o imagine valida\n";
+        return 0;
+    }
+
+    const char *filepath = argv[1];
+    const int widthdorit = stoi(argv[3]);
+    const int heightdorit = stoi(argv[4]);
+
+
+    unsigned char *img=stbi_load(filepath,&imagine.width,&imagine.height,&imagine.channels,0);
     int p;
     if (img==nullptr)
     {
@@ -36,58 +49,90 @@ int main()
         exit(1);
     }
 
-    cout << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl;
+    cout << "Dimensiuni initiale: " << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl;
 
-    cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
-    int newwidth, newheight;
-    cin >> newwidth >> newheight;
-
-    unsigned char *resized_img = new unsigned char[newwidth * newheight * imagine.channels];
-
-    stbir_resize_uint8_linear(
-        img,
-        imagine.width,
-        imagine.height,
-        0,
-        resized_img,
-        newwidth,
-        newheight,
-        0,
-        STBIR_RGB);
-
+    //cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
+    //int newwidth , newheight;
+    //cin >> newwidth >> newheight;
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
+    bool ok;
+    cout << "Doresti sa dai resize la imagine?\n (1 - DA , 0 - NU)";
+    cin >> ok;
+    if (ok==true) {
+        unsigned char *resized_img = new unsigned char[widthdorit * heightdorit * imagine.channels];
 
-    for (int i=0;i<newheight;i++)
-    {
-        for (int j=0;j<newwidth;j++)
+        stbir_resize_uint8_linear(
+            img,
+            imagine.width,
+            imagine.height,
+            0,
+            resized_img,
+            widthdorit,
+            heightdorit,
+            0,
+            STBIR_RGB);
+
+
+        for (int i=0;i<heightdorit;i++)
         {
-            p=(i*newwidth+j)*imagine.channels;
+            for (int j=0;j<widthdorit;j++)
+            {
+                p=(i*widthdorit+j)*imagine.channels;
 
-            unsigned char r=resized_img[p+0];
-            unsigned char g=resized_img[p+1];
-            unsigned char b=resized_img[p+2];
-            int brightness=0.299*r+0.587*g+0.114*b;
+                unsigned char r=resized_img[p+0];
+                unsigned char g=resized_img[p+1];
+                unsigned char b=resized_img[p+2];
+                int brightness=0.299*r+0.587*g+0.114*b;
 
-            if (brightness<25) Afis<<color.simbol[25]<<" ";
-            else if (brightness<50) Afis<<color.simbol[50]<<" ";
-            else if (brightness<75) Afis<<color.simbol[75]<<" ";
-            else if (brightness<100) Afis<<color.simbol[100]<<" ";
-            else if (brightness<125) Afis<<color.simbol[125]<<" ";
-            else if (brightness<150) Afis<<color.simbol[150]<<" ";
-            else if (brightness<175) Afis<<color.simbol[175]<<" ";
-            else if (brightness<200) Afis<<color.simbol[200]<<" ";
-            else if (brightness<225) Afis<<color.simbol[225]<<" ";
-            else if (brightness<255) Afis<<color.simbol[255]<<" ";
+                if (brightness<25) Afis<<color.simbol[25]<<" ";
+                else if (brightness<50) Afis<<color.simbol[50]<<" ";
+                else if (brightness<75) Afis<<color.simbol[75]<<" ";
+                else if (brightness<100) Afis<<color.simbol[100]<<" ";
+                else if (brightness<125) Afis<<color.simbol[125]<<" ";
+                else if (brightness<150) Afis<<color.simbol[150]<<" ";
+                else if (brightness<175) Afis<<color.simbol[175]<<" ";
+                else if (brightness<200) Afis<<color.simbol[200]<<" ";
+                else if (brightness<225) Afis<<color.simbol[225]<<" ";
+                else if (brightness<255) Afis<<color.simbol[255]<<" ";
 
-           // cout << " " << brightness;
+                // cout << " " << brightness;
+            }
+            Afis << endl;
+
         }
-        Afis << endl;
+    delete[] resized_img;
+    }
+    else {
+        for (int i=0;i<imagine.height;i++)
+        {
+            for (int j=0;j<imagine.width;j++)
+            {
+                p=(i*imagine.width+j)*imagine.channels;
 
+                unsigned char r=img[p+0];
+                unsigned char g=img[p+1];
+                unsigned char b=img[p+2];
+                int brightness=0.299*r+0.587*g+0.114*b;
+
+                if (brightness<25) Afis<<color.simbol[25]<<" ";
+                else if (brightness<50) Afis<<color.simbol[50]<<" ";
+                else if (brightness<75) Afis<<color.simbol[75]<<" ";
+                else if (brightness<100) Afis<<color.simbol[100]<<" ";
+                else if (brightness<125) Afis<<color.simbol[125]<<" ";
+                else if (brightness<150) Afis<<color.simbol[150]<<" ";
+                else if (brightness<175) Afis<<color.simbol[175]<<" ";
+                else if (brightness<200) Afis<<color.simbol[200]<<" ";
+                else if (brightness<225) Afis<<color.simbol[225]<<" ";
+                else if (brightness<255) Afis<<color.simbol[255]<<" ";
+
+                // cout << " " << brightness;
+            }
+            Afis << endl;
+
+        }
     }
 
-
     Afis.close();
-    delete[] resized_img;
     stbi_image_free(img);
     return 0;
 }
