@@ -49,7 +49,7 @@ int main(int argc , char *argv[])
     int p;
     if (img==nullptr)
     {
-        cout << "imaginea nu s-a loadat";
+        cout << "imaginea nu s-a loadat || "<<stbi_failure_reason()<<endl;
         exit(1);
     }
 
@@ -143,11 +143,9 @@ int main(int argc , char *argv[])
     return 0;
 }
 
-
     // ----- CELE DE JOS IAU IMAGINEA DEJA LOADATA SI O CREAZA IN FISIER / COPIAZA ------
     // stbi_write_png("fluture.png", width, height, channels, img, width*channels);
     // stbi_write_jpg("fluture.jpg", width, height, channels, img, 100);
-
 
 //MAX BRIGHTNESS 255 255/10 = 25.5 ~ 25
 //
