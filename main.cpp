@@ -30,16 +30,20 @@ struct ascii {
 int main(int argc , char *argv[])
 {
 
-    if (argc!=3) {
+    if (argc<2) {
         cout << "Usage: " << argv[0] << " <path_to_image>" << endl;
         cout<<"Introdu o imagine valida\n";
         return 0;
     }
 
-    const char *filepath = argv[1];
-    const int widthdorit = stoi(argv[3]);
-    const int heightdorit = stoi(argv[4]);
+    int widthdorit;
+    int heightdorit;
 
+    const char *filepath = argv[1];
+    if (argv[2]!=NULL&&argv[3]!=NULL) {
+         widthdorit = stoi(argv[2]);
+         heightdorit = stoi(argv[3]);
+    }
 
     unsigned char *img=stbi_load(filepath,&imagine.width,&imagine.height,&imagine.channels,0);
     int p;
@@ -55,9 +59,11 @@ int main(int argc , char *argv[])
     //int newwidth , newheight;
     //cin >> newwidth >> newheight;
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
-    bool ok;
-    cout << "Doresti sa dai resize la imagine?\n (1 - DA , 0 - NU)";
-    cin >> ok;
+    bool ok=false;
+    if (argv[2]!=NULL&&argv[3]!=NULL) {
+        cout << "Doresti sa dai resize la imagine?\n (1 - DA , 0 - NU)";
+        cin >> ok;
+    }
     if (ok==true) {
         unsigned char *resized_img = new unsigned char[widthdorit * heightdorit * imagine.channels];
 
@@ -138,26 +144,6 @@ int main(int argc , char *argv[])
 }
 
 
-
-
-
-/*
-    int gray_channels;
-    if (channels == 4) {
-        gray_channels = 2;
-    } else {
-        gray_channels = 1;
-    }
-    size_t img_size = width * height * channels;
-    size_t gray_size = width * height * gray_channels;
-    unsigned char *grey_img = (unsigned char *)malloc(gray_size);
-    if (grey_img == NULL)
-    {
-        cout << "imaginea gri nu s-a loadat";
-        exit(1);
-    }
-
-*/
     // ----- CELE DE JOS IAU IMAGINEA DEJA LOADATA SI O CREAZA IN FISIER / COPIAZA ------
     // stbi_write_png("fluture.png", width, height, channels, img, width*channels);
     // stbi_write_jpg("fluture.jpg", width, height, channels, img, 100);
