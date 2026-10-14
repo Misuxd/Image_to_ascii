@@ -24,8 +24,10 @@ struct ascii {
 
 }color;
 
-// !!! DE FACUT CA UIT -- MUTAT IMAGINI IN FOLDERUL DE IMAGINI -- FOLOSIT ARGV PT FILENAME , WIDTH , HEIGHT
-// ALSO DE GASIT O METODA SA IL FAC SA ARATE MAI FRUMOS
+
+// !! de facut un average brightness ca sa pot sa reglez dupa imagine // daca e prea light sa folosesc alt vector pentru a fi mai frumoasa imaginea
+// De adaugat sugestii de resize ( impratit la 2 / 4 / 8 )
+// De facut functii pentru tot , ca sa arate mai frumos
 
 int main(int argc , char *argv[])
 {
@@ -39,7 +41,15 @@ int main(int argc , char *argv[])
     int widthdorit;
     int heightdorit;
 
-    const char *filepath = argv[1];
+    char *filepath = argv[1];
+
+
+    if (argv[1]==NULL) {
+        cout<< "introdu calea catre imaginea pe care vrei sa o transformi\n";
+        cin>> filepath;
+    }
+    else char *filepath = argv[1];
+
     if (argv[2]!=NULL&&argv[3]!=NULL) {
          widthdorit = stoi(argv[2]);
          heightdorit = stoi(argv[3]);
@@ -55,9 +65,6 @@ int main(int argc , char *argv[])
 
     cout << "Dimensiuni initiale: " << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl;
 
-    //cout << "Introdu inaltimea respectiv latimea pozei pe care vrei sa o transformi in ascii: "<< '\n';
-    //int newwidth , newheight;
-    //cin >> newwidth >> newheight;
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
     bool ok=false;
     if (argv[2]!=NULL&&argv[3]!=NULL) {
