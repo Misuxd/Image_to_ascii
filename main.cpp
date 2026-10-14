@@ -26,7 +26,8 @@ struct ascii {
 
 
 // !! de facut un average brightness ca sa pot sa reglez dupa imagine // daca e prea light sa folosesc alt vector pentru a fi mai frumoasa imaginea
-// De adaugat sugestii de resize ( impratit la 2 / 4 / 8 )
+// De adaugat sugestii de resize ( impratit la 2 / 4 / 8 ) si optiuni pentru asta adica daca da input deja el nu mai trebuie sa dai resize recomandat si select pt dimensiuni recomandate
+
 // De facut functii pentru tot , ca sa arate mai frumos
 
 int main(int argc , char *argv[])
@@ -63,7 +64,8 @@ int main(int argc , char *argv[])
         exit(1);
     }
 
-    cout << "Dimensiuni initiale: " << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl;
+    cout << "Dimensiuni initiale: " << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl
+    << "Dimensiuni recomandate:\n" << "-> " << imagine.width/2 << " x " << imagine.height/2 << endl <<  "-> " << imagine.width/4 << " x " << imagine.height/4 << endl;
 
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
     bool ok=false;
