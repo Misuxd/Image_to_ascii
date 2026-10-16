@@ -86,16 +86,19 @@ int main(int argc , char *argv[])
         exit(1);
     }
 
+    cout<<"\n****************************************\n";
     cout << "Dimensiuni initiale: " << imagine.width << " x " << imagine.height << " x " << imagine.channels << endl
     << "Dimensiuni recomandate:\n" << "-> " << imagine.width/2 << " x " << imagine.height/2 << endl <<  "-> " << imagine.width/4 << " x " << imagine.height/4 << endl;
+    cout<<"\n****************************************\n";
 
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
     bool ok=false;
-
+        cout<<"****************************************\n";
         cout << "Doresti sa dai resize la imagine?   (1 - DA , 0 - NU) \n";
         cin >> ok;
-        cout << "introdu brightness (min 1, max 125)\n";
+        cout << "introdu brightness (min - 1, max - 125, Default - 50)\n";
         cin >> brightindx;
+        cout<<"****************************************\n";
 
         if (brightindx<1) brightindx=1;
         else if (brightindx>255) brightindx=125;
