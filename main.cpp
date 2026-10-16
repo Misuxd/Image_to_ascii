@@ -73,7 +73,7 @@ int main(int argc , char *argv[])
     char *filepath = argv[1];
     // de rezolvat introducerea asta
 
-    if (argv[2]!=NULL&&argv[3]!=NULL) {
+    if (argc>=4) {
          widthdorit = stoi(argv[2]);
          heightdorit = stoi(argv[3]);
     }
@@ -115,7 +115,7 @@ int main(int argc , char *argv[])
     delete[] resized_img;
     }
     else {
-        Afisare_Char(imagine.width,imagine.width,img,brightindx);
+        Afisare_Char(imagine.width,imagine.height,img,brightindx);
     }
 
     Afis.close();
