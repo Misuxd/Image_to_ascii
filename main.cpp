@@ -26,9 +26,42 @@ struct ascii {
 
 
 // !! de facut un average brightness ca sa pot sa reglez dupa imagine // daca e prea light sa folosesc alt vector pentru a fi mai frumoasa imaginea
-// De adaugat sugestii de resize ( impratit la 2 / 4 / 8 ) si optiuni pentru asta adica daca da input deja el nu mai trebuie sa dai resize recomandat si select pt dimensiuni recomandate
-
+// Dimensiuni recomandate solve shit, fa cumva sa dea select la dimensiuni recomandate si sa le dea highlight si sa apas enter ca sa selectez
 // De facut functii pentru tot , ca sa arate mai frumos
+
+void Afisare_Char(int width, int height, unsigned char *imageval)
+{
+    ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
+    for (int i=0;i<height;i++)
+    {
+        for (int j=0;j<width;j++)
+        {
+            int p=(i*width+j)*imagine.channels;
+
+            unsigned char r=imageval[p+0];
+            unsigned char g=imageval[p+1];
+            unsigned char b=imageval[p+2];
+            int brightness=0.299*r+0.587*g+0.114*b;
+
+            if (brightness<25) Afis<<color.simbol[25]<<" ";
+            else if (brightness<50) Afis<<color.simbol[50]<<" ";
+            else if (brightness<75) Afis<<color.simbol[75]<<" ";
+            else if (brightness<100) Afis<<color.simbol[100]<<" ";
+            else if (brightness<125) Afis<<color.simbol[125]<<" ";
+            else if (brightness<150) Afis<<color.simbol[150]<<" ";
+            else if (brightness<175) Afis<<color.simbol[175]<<" ";
+            else if (brightness<200) Afis<<color.simbol[200]<<" ";
+            else if (brightness<225) Afis<<color.simbol[225]<<" ";
+            else if (brightness<255) Afis<<color.simbol[255]<<" ";
+
+            // cout << " " << brightness;
+        }
+        Afis << endl;
+
+    }
+
+}
+
 
 int main(int argc , char *argv[])
 {
@@ -36,20 +69,16 @@ int main(int argc , char *argv[])
     if (argc<2) {
         cout << "Usage: " << argv[0] << " <path_to_image>" << endl;
         cout<<"Introdu o imagine valida\n";
-        return 0;
     }
-
     int widthdorit;
     int heightdorit;
-
     char *filepath = argv[1];
-
-
+    // de rezolvat introducerea asta
     if (argv[1]==NULL) {
         cout<< "introdu calea catre imaginea pe care vrei sa o transformi\n";
         cin>> filepath;
     }
-    else char *filepath = argv[1];
+    else {cout<< "nu ai introdus o cale valida codul se va inchide"; return 0;}
 
     if (argv[2]!=NULL&&argv[3]!=NULL) {
          widthdorit = stoi(argv[2]);
@@ -70,81 +99,21 @@ int main(int argc , char *argv[])
     ofstream Afis("Rezultat.txt"); // textfile read only cu rezultatul
     bool ok=false;
     if (argv[2]!=NULL&&argv[3]!=NULL) {
-        cout << "Doresti sa dai resize la imagine?\n (1 - DA , 0 - NU)";
+        cout << "Doresti sa dai resize la imagine?   (1 - DA , 0 - NU) \n";
         cin >> ok;
     }
     if (ok==true) {
         unsigned char *resized_img = new unsigned char[widthdorit * heightdorit * imagine.channels];
 
-        stbir_resize_uint8_linear(
-            img,
-            imagine.width,
-            imagine.height,
-            0,
-            resized_img,
-            widthdorit,
-            heightdorit,
-            0,
-            STBIR_RGB);
+        stbir_resize_uint8_linear(img, imagine.width, imagine.height, 0, resized_img,
+            widthdorit,heightdorit,0,STBIR_RGB);
 
+        Afisare_Char(widthdorit,heightdorit,resized_img);
 
-        for (int i=0;i<heightdorit;i++)
-        {
-            for (int j=0;j<widthdorit;j++)
-            {
-                p=(i*widthdorit+j)*imagine.channels;
-
-                unsigned char r=resized_img[p+0];
-                unsigned char g=resized_img[p+1];
-                unsigned char b=resized_img[p+2];
-                int brightness=0.299*r+0.587*g+0.114*b;
-
-                if (brightness<25) Afis<<color.simbol[25]<<" ";
-                else if (brightness<50) Afis<<color.simbol[50]<<" ";
-                else if (brightness<75) Afis<<color.simbol[75]<<" ";
-                else if (brightness<100) Afis<<color.simbol[100]<<" ";
-                else if (brightness<125) Afis<<color.simbol[125]<<" ";
-                else if (brightness<150) Afis<<color.simbol[150]<<" ";
-                else if (brightness<175) Afis<<color.simbol[175]<<" ";
-                else if (brightness<200) Afis<<color.simbol[200]<<" ";
-                else if (brightness<225) Afis<<color.simbol[225]<<" ";
-                else if (brightness<255) Afis<<color.simbol[255]<<" ";
-
-                // cout << " " << brightness;
-            }
-            Afis << endl;
-
-        }
     delete[] resized_img;
     }
     else {
-        for (int i=0;i<imagine.height;i++)
-        {
-            for (int j=0;j<imagine.width;j++)
-            {
-                p=(i*imagine.width+j)*imagine.channels;
-
-                unsigned char r=img[p+0];
-                unsigned char g=img[p+1];
-                unsigned char b=img[p+2];
-                int brightness=0.299*r+0.587*g+0.114*b;
-
-                if (brightness<25) Afis<<color.simbol[25]<<" ";
-                else if (brightness<50) Afis<<color.simbol[50]<<" ";
-                else if (brightness<75) Afis<<color.simbol[75]<<" ";
-                else if (brightness<100) Afis<<color.simbol[100]<<" ";
-                else if (brightness<125) Afis<<color.simbol[125]<<" ";
-                else if (brightness<150) Afis<<color.simbol[150]<<" ";
-                else if (brightness<175) Afis<<color.simbol[175]<<" ";
-                else if (brightness<200) Afis<<color.simbol[200]<<" ";
-                else if (brightness<225) Afis<<color.simbol[225]<<" ";
-                else if (brightness<255) Afis<<color.simbol[255]<<" ";
-
-                // cout << " " << brightness;
-            }
-            Afis << endl;
-
-        }
+        Afisare_Char(imagine.width,imagine.width,img);
     }
 
     Afis.close();
@@ -160,3 +129,4 @@ int main(int argc , char *argv[])
 //
     // stbi_write_png("*.png", newwidth, newheight, channels, resized_img, newwidth * channels);
     // cout << "Successfully save!" << endl;
+
